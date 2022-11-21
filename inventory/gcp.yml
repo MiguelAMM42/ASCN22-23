@@ -3,9 +3,9 @@ all:
  vars:
 
   # GKE cluster variables
-  gcp_project: <project_name>              # ID of GCP Project
+  gcp_project: liquid-fuze-337100              # ID of GCP Project
   gcp_auth_kind: serviceaccount            # Do not change
-  gcp_cred_file: <path_service_account>    # Path to service account keys (json file downloaded from GCP)
+  gcp_cred_file: jsonCredentials/liquid-fuze-337100-74c3d27d92bd.json    # Path to service account keys (json file downloaded from GCP)
 
   gcp_zone: us-central1-a
   gcp_image_type: ubuntu_containerd
