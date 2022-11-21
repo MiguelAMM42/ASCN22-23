@@ -1,0 +1,22 @@
+---
+# Playbook to test the full deployment of Ghost (from creation to destruction)
+
+- import_playbook: deploy-ghost.yml
+
+- name: Tests
+  hosts: localhost
+  gather_facts: true
+  roles:
+    - { role: test_ghost }
+
+- import_playbook: undeploy-ghost.yml
+
+- import_playbook: deploy-ghost.yml
+
+- name: Tests
+  hosts: localhost
+  gather_facts: yes
+  roles:
+    - { role: test_ghost }
+
+- import_playbook: undeploy-ghost.yml delete_data='true'

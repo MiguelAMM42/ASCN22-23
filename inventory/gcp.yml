@@ -1,0 +1,23 @@
+---
+all:
+ vars:
+
+  # GKE cluster variables
+  gcp_project: <project_name>              # ID of GCP Project
+  gcp_auth_kind: serviceaccount            # Do not change
+  gcp_cred_file: <path_service_account>    # Path to service account keys (json file downloaded from GCP)
+
+  gcp_zone: us-central1-a
+  gcp_image_type: ubuntu_containerd
+  gcp_machine_type: e2-small          # Can be changed if necessary
+  gcp_disk_size_gb: 100                # Can be changed if necessary
+  gcp_initial_node_count: 2            # Number of nodes to create. Can be changed if necessary
+
+
+  # APP variables
+  ghost_ip: <GHOST_SERVICE_IP>     # Needs to be updated
+  ghost_port: <GHOST_PORT>         # Needs to be updated
+
+
+  # Additional variables
+  # ...
