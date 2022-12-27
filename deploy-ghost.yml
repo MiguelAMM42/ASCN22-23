@@ -1,3 +1,17 @@
 ---
 # Playbook to deploy Ghost and its components
-# TO DO
+- name: Ghost deploy start
+  hosts: ghost
+  become: yes
+  roles:
+    - ghost_deploy
+
+    
+
+
+
+
+
+
+    
+

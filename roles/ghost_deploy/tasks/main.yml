@@ -1,0 +1,26 @@
+---
+- name: Clone Ghost repository 
+  git:
+    repo: https://github.com/TryGhost/Ghost.git
+    dest: ~/ghost
+
+
+- name: Install node and npm
+  #hosts: 34.133.220.117
+  tasks:
+    - name: Update apt repo and cache
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    - name: Install nodejs and npm
+      apt:
+        pkg:
+          - nodejs
+          - npm
+
+- name: Deploy Ghost
+  tasks:
+    - name: npm install ghost-cli -g
+      community.general.npm:
+        name: ghost-cli
+        global: true
+    - name: ghost install  
+      shell: ghost install
