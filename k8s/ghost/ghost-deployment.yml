@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+  labels:
+    app: ghost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghost
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      containers:
+      - name: ghost
+        image: ghost:latest
+        env:
+          - name: NODE_ENV
+            value: "production"
+          - name: database__connection__database
+            value: "ghost"
+          - name: database__connection__user
+            value: "ghostuser"
+          - name: database__connection__password
+            value: "123456"
+          - name: database__connection__host
+            value: "mysql-service"
+        ports:
+          - containerPort: 2638
