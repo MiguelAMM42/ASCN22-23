@@ -23,6 +23,8 @@ spec:
         env:
           - name: NODE_ENV
             value: "production"
+          - name: url
+            value: "http://34.170.217.154:2368"
           # -- Database
           - name: database__connection__database
             value: "ghost"
@@ -48,4 +50,4 @@ spec:
           - name: mail__options__auth__pass
             value: "template"
         ports:
-          - containerPort: 2638
+        - containerPort: 2368

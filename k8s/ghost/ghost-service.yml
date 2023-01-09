@@ -10,5 +10,5 @@ spec:
     app: ghost
   ports:
     - protocol: TCP
-      targetPort:  2638
+      targetPort:  2368
       port:  80
