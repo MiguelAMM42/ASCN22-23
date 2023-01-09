@@ -1,7 +1,9 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
+  namespace: default
   labels:
     app: mysql
     tier: db
@@ -25,10 +27,17 @@ spec:
           - name: MYSQL_ALLOW_EMPTY_PASSWORD
             value: "true"
           - name: MYSQL_DATABASE
-            value: ghost
+            value: "ghost"
           - name: MYSQL_USER
-            value: ghostuser
+            value: "ghostuser"
           - name: MYSQL_PASSWORD
-            value: "123456" # Use Secret object in real usage
+            value: "very_complicated_password" # Use Secret object in real usage
         ports:
           - containerPort: 3306
+        volumeMounts:
+          - name:  mysql-pv
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-pv 
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim

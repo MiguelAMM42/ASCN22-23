@@ -10,6 +10,8 @@ spec:
   selector:
     matchLabels:
       app: ghost
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -21,13 +23,29 @@ spec:
         env:
           - name: NODE_ENV
             value: "production"
+          # -- Database
           - name: database__connection__database
             value: "ghost"
           - name: database__connection__user
             value: "ghostuser"
           - name: database__connection__password
-            value: "123456"
+            value: "very_complicated_password"
           - name: database__connection__host
             value: "mysql-service"
+          - name: database__client
+            value: "mysql"
+          # -- Email  
+          - name: mail__transport
+            value: "SMTP"
+          - name: mail__options__service
+            value: "Mailgun"
+          - name: mail__options__host
+            value: "smtp.mailgun.org"
+          - name: mail__options__port
+            value: "465"
+          - name: mail__options__auth__user
+            value: "template"
+          - name: mail__options__auth__pass
+            value: "template"
         ports:
           - containerPort: 2638

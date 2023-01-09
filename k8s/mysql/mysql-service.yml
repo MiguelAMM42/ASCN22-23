@@ -1,7 +1,9 @@
+---
 kind: Service
 apiVersion: v1
 metadata:
   name:  mysql-service
+  namespace: default
   labels:
     app: mysql
     tier: db
