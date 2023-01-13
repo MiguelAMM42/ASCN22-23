@@ -42,9 +42,6 @@
     namespace: default
     wait: yes
   register: ghost_service
-  #until: ghost_service.resources[0].status.loadBalancer.ingress[0] is defined
-  #delay: 20
-  #retries: 5
 
 - name: debg
   debug:
