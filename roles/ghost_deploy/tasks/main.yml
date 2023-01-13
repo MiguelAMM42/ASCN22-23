@@ -15,8 +15,10 @@
     kind: Service
     name: ghost-service
     namespace: default
-    wait: yes
   register: ghost_service
+  until: ghost_service.resources[0].status.loadBalancer.ingress is defined
+  retries: 5
+  delay: 30
 
 - name: Define ghost ip and port
   set_fact:
