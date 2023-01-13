@@ -4,11 +4,11 @@
     src: mysql-pvc.yml
     dest: tmp/mysql-pvc.yml
 
-# - name: Claim pv
-#   kubernetes.core.k8s:
-#     state: present
-#     src: tmp/mysql-pvc.yml
-#     wait: yes
+- name: Claim pv
+  kubernetes.core.k8s:
+    state: present
+    src: tmp/mysql-pvc.yml
+    wait: yes
 
 - name: Create mysql service and deployment
   template:
