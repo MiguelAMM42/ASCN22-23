@@ -5,7 +5,7 @@ all:
   # GKE cluster variables
   gcp_project: liquid-fuze-337100              # ID of GCP Project
   gcp_auth_kind: serviceaccount            # Do not change
-  gcp_cred_file: jsonCredentials/liquid-fuze-337100-74c3d27d92bd.json    # Path to service account keys (json file downloaded from GCP)
+  gcp_cred_file: CHANGE_ME    # Path to service account keys (json file downloaded from GCP)
 
   gcp_zone: us-central1-a
   gcp_image_type: ubuntu_containerd
@@ -16,8 +16,14 @@ all:
 
   # APP variables
   ghost_ip: 34.133.220.117     # Needs to be updated
-  ghost_port: 8069         # Needs to be updated
+  ghost_port: 80         # Needs to be updated
+  
+  db_name: ghost
+  db_user: ghostuser
+  db_pass: very_complicated_password
 
 
   # Additional variables
   # ...
+  mail__options__auth__user: CHANGE_ME
+  mail__options__auth__pass: CHANGE_ME_TOO

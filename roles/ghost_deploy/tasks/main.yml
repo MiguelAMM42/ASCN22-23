@@ -1,26 +1,71 @@
 ---
-- name: Clone Ghost repository 
-  git:
-    repo: https://github.com/TryGhost/Ghost.git
-    dest: ~/ghost
+# - name: Clone Ghost repository 
+#   git:
+#     repo: https://github.com/TryGhost/Ghost.git
+#     dest: ~/ghost
 
 
-- name: Install node and npm
-  #hosts: 34.133.220.117
-  tasks:
-    - name: Update apt repo and cache
-      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
-    - name: Install nodejs and npm
-      apt:
-        pkg:
-          - nodejs
-          - npm
+# - name: Install node and npm
+#   #hosts: 34.133.220.117
+#   tasks:
+#     - name: Update apt repo and cache
+#       apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+#     - name: Install nodejs and npm
+#       apt:
+#         pkg:
+#           - nodejs
+#           - npm
 
-- name: Deploy Ghost
-  tasks:
-    - name: npm install ghost-cli -g
-      community.general.npm:
-        name: ghost-cli
-        global: true
-    - name: ghost install  
-      shell: ghost install
+# - name: Deploy Ghost
+#   tasks:
+#     - name: npm install ghost-cli -g
+#       community.general.npm:
+#         name: ghost-cli
+#         global: true
+#     - name: ghost install  
+#       shell: ghost install
+- name: Create ghost service file
+  template:
+    src: ghost-service.yml
+    dest: tmp/ghost-service.yml
+
+- name: Start ghost service
+  kubernetes.core.k8s:
+    state: present
+    src: tmp/ghost-service.yml
+    wait: yes
+
+- name: Get service ip and port
+  kubernetes.core.k8s_info:
+    kind: Service
+    name: ghost-service
+    namespace: default
+    wait: yes
+  register: ghost_service
+  #until: ghost_service.resources[0].status.loadBalancer.ingress[0] is defined
+  #delay: 20
+  #retries: 5
+
+- name: debg
+  debug:
+    var: ghost_service
+
+- name: Define ghost ip and port
+  set_fact:
+    ghost_ip: "{{ ghost_service.resources[0].status.loadBalancer.ingress[0].ip }}"
+    ghost_port: "{{ ghost_service.resources[0].spec.ports[0].port }}"
+
+- name: Print ghost URL
+  debug:
+    msg: "Ghost url: http://{{ ghost_ip }}:{{ ghost_port }}"
+
+- name: Create ghost deployment file
+  template:
+    src: ghost-deployment.yml
+    dest: tmp/ghost-deployment.yml
+
+- name: Deploy ghost app
+  kubernetes.core.k8s:
+    state: present
+    src: tmp/ghost-deployment.yml
+    wait: yes

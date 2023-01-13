@@ -1,1 +1,2 @@
 jsonCredentials/*.json
+**/tmp/

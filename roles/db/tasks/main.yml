@@ -1,0 +1,33 @@
+---
+- name: Create mysql pv claim file
+  template:
+    src: mysql-pvc.yml
+    dest: tmp/mysql-pvc.yml
+
+# - name: Claim pv
+#   kubernetes.core.k8s:
+#     state: present
+#     src: tmp/mysql-pvc.yml
+#     wait: yes
+
+- name: Create mysql service and deployment
+  template:
+    src: mysql-service.yml
+    dest: tmp/mysql-service.yml
+  
+- name: Start mysql service
+  kubernetes.core.k8s:
+    state: present
+    src: tmp/mysql-service.yml
+    wait: yes
+
+- name: Create mysql deployment
+  template:
+    src: mysql-deployment.yml
+    dest: tmp/mysql-deployment.yml
+  
+- name: Deploy mysql pod
+  kubernetes.core.k8s:
+    state: present
+    src: tmp/mysql-deployment.yml
+    wait: yes

@@ -27,11 +27,11 @@ spec:
           - name: MYSQL_ALLOW_EMPTY_PASSWORD
             value: "true"
           - name: MYSQL_DATABASE
-            value: "ghost"
+            value: "{{ db_name }}"
           - name: MYSQL_USER
-            value: "ghostuser"
+            value: "{{ db_user }}"
           - name: MYSQL_PASSWORD
-            value: "very_complicated_password" # Use Secret object in real usage
+            value: "{{ db_pass }}" # Use Secret object in real usage
         ports:
           - containerPort: 3306
         volumeMounts:

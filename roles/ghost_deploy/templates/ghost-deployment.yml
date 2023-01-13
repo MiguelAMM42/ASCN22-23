@@ -2,6 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: ghost
   labels:
     app: ghost
@@ -24,14 +25,14 @@ spec:
           - name: NODE_ENV
             value: "production"
           - name: url
-            value: "http://34.170.217.154:2368"
+            value: "http://{{ ghost_ip }}:{{ ghost_port }}"
           # -- Database
           - name: database__connection__database
-            value: "ghost"
+            value: "{{ db_name }}"
           - name: database__connection__user
-            value: "ghostuser"
+            value: "{{ db_user }}"
           - name: database__connection__password
-            value: "very_complicated_password"
+            value: "{{ db_pass }}"
           - name: database__connection__host
             value: "mysql-service"
           - name: database__client
@@ -46,8 +47,8 @@ spec:
           - name: mail__options__port
             value: "465"
           - name: mail__options__auth__user
-            value: "template"
+            value: "{{mail__options__auth__user}}"
           - name: mail__options__auth__pass
-            value: "template"
+            value: "{{mail__options__auth__pass}}"
         ports:
         - containerPort: 2368
