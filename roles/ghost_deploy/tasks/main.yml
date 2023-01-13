@@ -43,10 +43,6 @@
     wait: yes
   register: ghost_service
 
-- name: debg
-  debug:
-    var: ghost_service
-
 - name: Define ghost ip and port
   set_fact:
     ghost_ip: "{{ ghost_service.resources[0].status.loadBalancer.ingress[0].ip }}"
