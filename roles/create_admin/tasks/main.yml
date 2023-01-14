@@ -1,6 +1,9 @@
 ---
+- name: Get password hash
+  shell: python3 -c 'import bcrypt; print(bcrypt.hashpw(b"{{ admin_pass }}", bcrypt.gensalt(rounds=10)).decode("ascii"))'
+  register: output
 
-- name: Get MySQL Pod
+- name: Get mysql pod
   k8s_info:
     kind: Pod
     namespace: "{{ db_namespace }}"
@@ -8,12 +11,16 @@
       - app=mysql
   register: mysql_pod
 
-- name: Get MySQL Pod Name
+- name: Define pod name
   set_fact:
     mysql_pod_name: '{{ mysql_pod.resources[0].metadata.name }}'
 
-- name: Get db pod
+- name: dbg
+  debug:
+    var: populate_command
+
+- name: Update admin
   kubernetes.core.k8s_exec:
     namespace: "{{ db_namespace }}"
     pod: "{{ mysql_pod_name }}"
-    command: 'mysql -u {{ db_user }} -p {{ db_pass }} -e \"{{ populate_command }}\"'
+    command: 'mysql --user="{{ db_user }}" --password="{{ db_pass }}" -e "{{ populate_command }}"'

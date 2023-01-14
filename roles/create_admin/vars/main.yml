@@ -1,5 +1,3 @@
 ---
-adminuser: ascn
-adminpass: asc123
-adminemail: ascn@example.com
-populate_command: INSERT INTO .users(name, password, emails) VALUES (`ascn`, `ascn123`, `ascn@example.com`)
+# Ghost creates an inactive user with id=1 at startup so we only have to update it
+populate_command: UPDATE {{ db_name }}.users set email='{{ admin_email }}', name='{{ admin_user }}', password='{{ output.stdout }}', status='active' where id=1;
