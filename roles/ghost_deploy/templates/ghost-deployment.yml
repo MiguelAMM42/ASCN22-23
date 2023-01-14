@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: default
+  namespace: "{{ ghost_namespace }}"
   name: ghost
   labels:
     app: ghost
@@ -34,7 +34,7 @@ spec:
           - name: database__connection__password
             value: "{{ db_pass }}"
           - name: database__connection__host
-            value: "mysql-service"
+            value: "mysql-service.{{ db_namespace }}"
           - name: database__client
             value: "mysql"
           # -- Email  
@@ -42,10 +42,6 @@ spec:
             value: "SMTP"
           - name: mail__options__service
             value: "Mailgun"
-          - name: mail__options__host
-            value: "smtp.mailgun.org"
-          - name: mail__options__port
-            value: "465"
           - name: mail__options__auth__user
             value: "{{mail__options__auth__user}}"
           - name: mail__options__auth__pass

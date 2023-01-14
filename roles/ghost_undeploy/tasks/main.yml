@@ -1,0 +1,61 @@
+---
+- name: Delete ghost deployment
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Deployment
+    namespace: "{{ ghost_namespace }}"
+    name: ghost
+    state: absent
+    wait: yes
+
+- name: Delete ghost service
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Service
+    namespace: "{{ ghost_namespace }}"
+    name: ghost-service
+    state: absent
+    wait: yes
+ 
+- name: Delete db deployment
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Deployment
+    namespace: "{{ db_namespace }}"
+    name: mysql
+    state: absent
+    wait: yes
+ 
+- name: Delete db service
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Service
+    namespace: "{{ db_namespace }}"
+    name: mysql-service
+    state: absent
+    wait: yes
+
+- name: Delete pvc
+  kubernetes.core.k8s:
+    state: absent
+    api_version: v1
+    kind: PersistentVolumeClaim
+    namespace: "{{ db_namespace }}"
+    name: mysql-pv-claim
+    wait: yes
+
+- name: Delete ghost namespace
+  kubernetes.core.k8s:
+    state: absent
+    api_version: v1
+    kind: Namespace
+    name: "{{ ghost_namespace }}"
+    wait: yes
+     
+- name: Delete db namespace
+  kubernetes.core.k8s:
+    state: absent
+    api_version: v1
+    kind: Namespace
+    name: "{{ db_namespace }}"
+    wait: yes

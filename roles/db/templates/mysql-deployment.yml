@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-  namespace: default
+  namespace: "{{ db_namespace }}"
   labels:
     app: mysql
     tier: db
