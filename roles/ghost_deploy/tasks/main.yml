@@ -36,8 +36,8 @@
     namespace: "{{ ghost_namespace }}"
   register: ghost_service
   until: ghost_service.resources[0].status.loadBalancer.ingress is defined
-  retries: 5
-  delay: 30
+  retries: 20
+  delay: 10
 
 - name: Define ghost ip and port
   set_fact:

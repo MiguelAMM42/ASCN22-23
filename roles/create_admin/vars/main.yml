@@ -1,0 +1,3 @@
+---
+# Ghost creates an inactive user with id=1 at startup so we only have to update it
+populate_command: UPDATE {{ db_name }}.users set email='{{ admin_email }}', name='{{ admin_user }}', password='{{ output.stdout }}', status='active' where id=1;

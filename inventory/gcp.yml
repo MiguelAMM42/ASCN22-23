@@ -17,6 +17,9 @@ all:
   ghost_namespace: ghost
   db_namespace: db
 
+  ghost_pod: ghost
+  db_pod: ghost
+
   ghost_ip: 34.133.220.117     # Needs to be updated
   ghost_port: 80         # Needs to be updated
   
