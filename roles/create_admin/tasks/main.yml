@@ -15,9 +15,15 @@
   set_fact:
     mysql_pod_name: '{{ mysql_pod.resources[0].metadata.name }}'
 
-- name: dbg
-  debug:
-    var: populate_command
+- name: Wait for user to be created
+  kubernetes.core.k8s_exec:
+    namespace: "{{ db_namespace }}"
+    pod: "{{ mysql_pod_name }}"
+    command: 'mysql --user="{{ db_user }}" --password="{{ db_pass }}" -e "SELECT * FROM {{ db_name }}.users where id=1;"'
+  register: migrations_result
+  until: migrations_result.stdout != ""
+  retries: 20
+  delay: 10
 
 - name: Update admin
   kubernetes.core.k8s_exec:

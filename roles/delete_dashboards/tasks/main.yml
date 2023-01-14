@@ -1,0 +1,4 @@
+---
+- name: Delete dashboard
+  shell: gcloud monitoring dashboards delete 'projects/liquid-fuze-337100/dashboards/DASHBOARD_ASCN' --quiet
+  when: delete_data is defined and delete_data == "true"

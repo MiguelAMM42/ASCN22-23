@@ -6,13 +6,4 @@
     - db
     - ghost_deploy
     - create_admin
-
-    
-
-
-
-
-
-
-    
-
+    - create_dashboards

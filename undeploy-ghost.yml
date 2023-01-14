@@ -2,4 +2,5 @@
 - name: Undeploy ghost
   hosts: localhost
   roles:
-  - ghost_undeploy
+    - ghost_undeploy
+    - delete_dashboards

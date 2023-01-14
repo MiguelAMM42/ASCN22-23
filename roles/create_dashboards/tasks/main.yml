@@ -1,0 +1,4 @@
+---
+- name: Create dashboard from JSON
+  shell: gcloud monitoring dashboards create --config-from-file=dashboards/Dashoard_ASCN.json
+  ignore_errors: true
