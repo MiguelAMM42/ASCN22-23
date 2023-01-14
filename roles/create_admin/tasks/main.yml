@@ -1,0 +1,19 @@
+---
+
+- name: Get MySQL Pod
+  k8s_info:
+    kind: Pod
+    namespace: "{{ db_namespace }}"
+    label_selectors:
+      - app=mysql
+  register: mysql_pod
+
+- name: Get MySQL Pod Name
+  set_fact:
+    mysql_pod_name: '{{ mysql_pod.resources[0].metadata.name }}'
+
+- name: Get db pod
+  kubernetes.core.k8s_exec:
+    namespace: "{{ db_namespace }}"
+    pod: "{{ mysql_pod_name }}"
+    command: 'mysql -u {{ db_user }} -p {{ db_pass }} -e \"{{ populate_command }}\"'

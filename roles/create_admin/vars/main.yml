@@ -1,0 +1,5 @@
+---
+adminuser: ascn
+adminpass: asc123
+adminemail: ascn@example.com
+populate_command: INSERT INTO .users(name, password, emails) VALUES (`ascn`, `ascn123`, `ascn@example.com`)
