@@ -16,6 +16,16 @@
     name: ghost-service
     state: absent
     wait: yes
+
+- name: Delete ghost pvc
+  kubernetes.core.k8s:
+    state: absent
+    api_version: v1
+    kind: PersistentVolumeClaim
+    namespace: "{{ ghost_namespace }}"
+    name: ghost-pv-claim
+    wait: yes
+  when: delete_data is defined and delete_data == "true"
  
 - name: Delete db deployment
   kubernetes.core.k8s:
@@ -35,7 +45,7 @@
     state: absent
     wait: yes
 
-- name: Delete pvc
+- name: Delete mysql pvc
   kubernetes.core.k8s:
     state: absent
     api_version: v1
@@ -43,19 +53,4 @@
     namespace: "{{ db_namespace }}"
     name: mysql-pv-claim
     wait: yes
-
-- name: Delete ghost namespace
-  kubernetes.core.k8s:
-    state: absent
-    api_version: v1
-    kind: Namespace
-    name: "{{ ghost_namespace }}"
-    wait: yes
-     
-- name: Delete db namespace
-  kubernetes.core.k8s:
-    state: absent
-    api_version: v1
-    kind: Namespace
-    name: "{{ db_namespace }}"
-    wait: yes
+  when: delete_data is defined and delete_data == "true"

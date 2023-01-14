@@ -18,7 +18,7 @@
     src: tmp/mysql-pvc.yml
     wait: yes
 
-- name: Create mysql service and deployment
+- name: Create mysql service
   template:
     src: mysql-service.yml
     dest: tmp/mysql-service.yml

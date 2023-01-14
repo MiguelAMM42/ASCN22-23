@@ -47,4 +47,11 @@ spec:
           - name: mail__options__auth__pass
             value: "{{mail__options__auth__pass}}"
         ports:
-        - containerPort: 2368
+          - containerPort: 2368
+        volumeMounts:
+          - name: ghost-pv
+            mountPath: /var/lib/ghost/content
+      volumes:
+        - name: ghost-pv
+          persistentVolumeClaim:
+            claimName: ghost-pv-claim

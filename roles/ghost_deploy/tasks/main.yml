@@ -7,6 +7,17 @@
     kind: Namespace
     wait: yes
 
+- name: Create ghost pv claim file
+  template:
+    src: ghost-pvc.yml
+    dest: tmp/ghost-pvc.yml
+
+- name: Claim pv
+  kubernetes.core.k8s:
+    state: present
+    src: tmp/ghost-pvc.yml
+    wait: yes
+
 - name: Create ghost service file
   template:
     src: ghost-service.yml
